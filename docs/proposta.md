@@ -282,3 +282,44 @@ repetir o experimento preliminar sobre imagens reais, comparando a
 contagem automática com o ground truth fornecido pelo dataset.
 
 ---
+
+## 9. Uso de Inteligência Artificial generativa
+
+- **Ferramenta utilizada:** Claude (Anthropic).
+- **Finalidade:** apoio na revisão gramatical e na organização da estrutura
+  da proposta técnica (divisão em seções, clareza do texto), além de apoio
+  para tirar dúvidas pontuais durante a escrita do código Python do
+  experimento preliminar (`src/experimento_contagem.py`) — por exemplo,
+  uso correto de funções do OpenCV e ajuste de parâmetros.
+- **Material produzido/modificado:** revisão de texto da proposta e do
+  README; apoio na escrita do script de experimento preliminar.
+- **Verificação pelo grupo:** o código foi executado pelo próprio grupo,
+  os resultados foram conferidos visualmente, e os parâmetros/lógica do
+  pipeline foram ajustados pelo grupo a partir desses testes. 
+
+---
+
+## 10. Referências
+
+- CARPK Dataset — Car Parking lot dataset (dataset público de referência
+  para contagem/detecção de veículos em imagens aéreas).
+- OpenCV documentation — https://docs.opencv.org/
+- scikit-image documentation — https://scikit-image.org/docs/stable/
+- Gonzalez, R. C.; Woods, R. E. *Digital Image Processing*. (bibliografia
+  de referência da disciplina, para as técnicas clássicas de realce,
+  segmentação e morfologia matemática utilizadas).
+
+---
+
+## 11. Próximos passos previstos (M2)
+
+1. Baixar e organizar o CARPK Dataset em `images/input/`.
+2. Repetir o experimento de detecção/contagem sobre imagens reais e
+   comparar com os resultados obtidos na imagem sintética.
+3. Ajustar parâmetros de detecção (contraste, filtros de forma) para as
+   características reais das imagens (resolução, ângulo, densidade).
+4. Medir o erro absoluto médio de contagem frente ao ground truth do
+   dataset.
+5. Investigar viabilidade da associação com vagas para estimativa de
+   ocupação (M3), incluindo a possibilidade de inferir uma grade de vagas
+   manualmente caso o dataset não tenha essa anotação.
