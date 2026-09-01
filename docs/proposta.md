@@ -186,3 +186,99 @@ está prevista a separação em módulos (`preprocessamento.py`,
 resultados e comparação de métodos.
 
 ---
+
+## 7. Estudo inicial de viabilidade
+
+### 7.1 Evidências reunidas na M1
+
+1. **Experimento preliminar executado** (`src/experimento_contagem.py`):
+   pipeline de pré-processamento → realce de contraste (CLAHE) → detecção
+   de candidatos → filtragem por forma/tamanho → contagem, testado sobre
+   uma imagem sintética simulando um estacionamento visto de cima, com 30
+   veículos em orientações, posições e cores variadas, incluindo pares
+   próximos e linhas claras simulando marcações de vaga.
+   - **Resultado final:** 17 de 30 veículos detectados corretamente (ver
+     `images/results/experimento_contagem_veiculos.png`).
+   - **Duas iterações documentadas no próprio código:**
+     1. A primeira versão detectava candidatos por bordas (Canny) e
+        fechamento morfológico. Essa abordagem falhou: como as linhas de
+        marcação de vaga cruzam visualmente sobre os veículos na imagem,
+        o fechamento morfológico conectava o contorno do veículo ao da
+        linha, formando um único blob grande demais para passar no filtro
+        de forma — apenas 1 de 30 veículos sobrevivia à filtragem.
+     2. A correção trocou a estratégia para segmentação no canal de
+        **saturação do espaço HSV**: veículos com cores saturadas
+        (vermelho, azul, verde) se destacam bem do asfalto e das
+        marcações (neutros), o que elevou a detecção para 17 de 30.
+     3. **Limitação identificada e registrada:** veículos com cores de
+        baixa saturação (branco, cinza, preto) não são detectados por
+        essa estratégia, pois se confundem com o fundo. Essa limitação é
+        conhecida e será endereçada na M2, combinando o critério de
+        saturação com um critério complementar de brilho/textura para
+        veículos neutros — algo esperado também em imagens reais, onde
+        carros brancos/prata/pretos são comuns.
+
+   Esse processo de iteração — identificar uma falha real, corrigir e
+   ainda assim documentar uma limitação remanescente — é, em si, a
+   principal evidência de investigação genuína pedida pela M1.
+
+2. **Literatura e datasets identificados:** o CARPK Dataset foi construído
+   especificamente para contagem/detecção de veículos em imagens aéreas de
+   drone, com anotações por bounding box, e é referência em diversos
+   trabalhos de visão computacional aplicada a estacionamentos — o que
+   indica alta viabilidade de se obter dados representativos e já
+   anotados, facilitando a validação quantitativa (item que faltava no
+   tema anterior avaliado pelo grupo).
+
+3. **Bibliotecas maduras disponíveis:** OpenCV oferece implementações
+   prontas e bem documentadas de todas as técnicas do pipeline preliminar
+   (CLAHE, detecção de contornos, operações morfológicas, watershed),
+   reduzindo o risco de inviabilidade técnica.
+
+### 7.2 Riscos identificados e mitigação planejada
+
+| Risco | Mitigação prevista |
+|---|---|
+| Veículos com cor muito próxima do asfalto (baixo contraste) | Testar realce em diferentes espaços de cor (Lab, HSV) e comparar com CLAHE simples em escala de cinza |
+| Sombras fortes (manhã/tarde) confundidas com veículos | Avaliar técnicas de remoção/normalização de sombra como etapa adicional, se necessário após testes com imagens reais |
+| Marcações de vaga e outros elementos do solo gerando falsos positivos | Filtragem por forma/razão de aspecto (já testada no experimento preliminar); refinar limites com dados reais |
+| Estacionamento muito cheio, veículos quase colados | Watershed com marcadores mais robustos; considerar detector treinado (M3) se o método clássico não for suficiente |
+| Dataset sem anotação de vagas (só de veículos) | Nesse caso, delimitar a estimativa de ocupação (M3) a uma grade de vagas inferida manualmente para um subconjunto de imagens, documentando a limitação |
+
+---
+
+## 8. Imagens e dados
+
+### 8.1 Dataset alvo
+
+- **Nome:** CARPK Dataset (Car Parking lot dataset).
+- **Origem:** dataset público, criado para pesquisa em contagem/detecção
+  de veículos a partir de imagens aéreas capturadas por drone; amplamente
+  utilizado como benchmark acadêmico para essa tarefa.
+- **Quantidade:** conjunto público com milhares de veículos anotados
+  (bounding boxes) distribuídos em centenas de imagens de diferentes
+  estacionamentos.
+- **Formato:** imagens RGB, com anotações em formato de bounding box por
+  veículo.
+- **Licença/uso:** dataset de uso acadêmico amplamente disponível para
+  pesquisa; o grupo irá verificar e registrar os termos exatos de licença
+  no momento do download, antes de decidir se as imagens serão
+  redistribuídas no repositório ou apenas referenciadas com instruções de
+  obtenção.
+
+### 8.2 Situação na M1
+
+O dataset definitivo **ainda não foi baixado** para o repositório. Nesta
+etapa, a viabilidade do pipeline foi validada com uma **imagem sintética
+gerada localmente**, simulando veículos retangulares em diferentes
+orientações e posições sobre um fundo tipo asfalto, suficiente para testar
+a lógica de detecção, separação morfológica e filtragem antes de investir
+tempo em ajuste fino sobre dados reais.
+
+**Próximo passo imediato (início da M2):** baixar o CARPK Dataset,
+selecionar uma amostra representativa, documentar suas características
+reais (resolução, ângulo de captura, densidade de veículos por imagem) e
+repetir o experimento preliminar sobre imagens reais, comparando a
+contagem automática com o ground truth fornecido pelo dataset.
+
+---
