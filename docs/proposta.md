@@ -115,3 +115,74 @@ taxa de ocupação ────────────────────�
   imagens disponíveis.
 
 ---
+
+## 5. Pipeline preliminar
+
+```mermaid
+flowchart LR
+    A[Imagem aérea de entrada] --> B[Pré-processamento]
+    B --> C[Realce de contraste]
+    C --> D[Detecção de candidatos]
+    D --> E[Separação morfológica]
+    E --> F[Filtragem por forma/tamanho]
+    F --> G[Contagem de veículos]
+    G --> H[Associação com vagas - M3]
+    H --> I[Taxa de ocupação]
+```
+
+### Alternativas consideradas para a etapa de detecção
+
+```mermaid
+flowchart TD
+    A[Imagem pré-processada] --> B1[Limiar adaptativo + contornos<br/>filtrados por área/forma]
+    A --> B2[Detecção de bordas Canny<br/>+ operações morfológicas]
+    A --> B3[Detector leve pré-treinado<br/>ex: HOG+SVM ou modelo compacto, se houver tempo em M2/M3]
+
+    B1 --> C[Comparar erro de contagem]
+    B2 --> C
+    B3 --> C
+```
+
+### Detalhamento por etapa
+
+| Etapa | Finalidade | Técnica(s) inicialmente consideradas | Entrada | Saída | Dúvidas em aberto |
+|---|---|---|---|---|---|
+| Pré-processamento | Reduzir ruído, padronizar imagem | Gaussian blur, CLAHE (equalização adaptativa de histograma) | Imagem RGB | Imagem filtrada | CLAHE é suficiente para sombras fortes, ou será preciso remoção de sombra dedicada? |
+| Realce de contraste | Destacar veículos do asfalto | CLAHE em canal de luminância (espaço Lab) | Imagem filtrada | Imagem com contraste realçado | Veículos de cor muito próxima do asfalto (cinza, prata) continuam difíceis? |
+| Detecção de candidatos | Identificar regiões prováveis de veículo | Segmentação por limiar no canal de saturação (HSV) — técnica adotada após uma primeira tentativa por bordas (Canny) ter falhado devido às marcações de vaga | Imagem realçada | Máscara binária de candidatos | Veículos de baixa saturação (branco/cinza/preto) não são bem capturados por esse critério sozinho — como lidar com eles é uma questão em aberto para a M2 |
+| Separação morfológica | Separar veículos colados/próximos | Erosão/abertura morfológica; watershed se necessário (técnica já validada no experimento preliminar) | Máscara de candidatos | Máscara com regiões separadas | Veículos muito próximos (estacionamento cheio) exigem watershed com marcadores mais sofisticados? |
+| Filtragem por forma/tamanho | Descartar ruído (sombras, marcações, vegetação) | Filtro por área mínima/máxima e razão de aspecto (veículos são aproximadamente retangulares) | Máscara separada | Lista de candidatos válidos | Qual faixa de área/aspecto generaliza bem para diferentes resoluções de imagem no dataset real? |
+| Contagem | Produzir a métrica principal da M1/M2 | Contagem de regiões válidas após filtragem | Lista de candidatos | Número de veículos | Como validar contra o ground truth do CARPK de forma automatizada? |
+| Associação com vagas (M3) | Calcular taxa de ocupação | Detecção de grade de vagas (linhas) ou uso de anotações de vaga do dataset, quando disponíveis | Imagem + detecções | Taxa de ocupação | O dataset escolhido tem anotação de vagas, ou só de veículos? Isso pode limitar o escopo do M3. |
+
+---
+
+## 6. Arquitetura preliminar
+
+```mermaid
+flowchart TB
+    subgraph Entrada
+        A[images/input - dataset CARPK]
+    end
+    subgraph Processamento[src/ - pipeline PDI]
+        B[pré-processamento e realce]
+        C[detecção + separação morfológica]
+        D[filtragem e contagem]
+        E["associação com vagas (M3)"]
+    end
+    subgraph Saída
+        F[images/results - visualizações]
+        G["relatório de métricas (M2/M3)"]
+    end
+
+    A --> B --> C --> D --> F
+    D --> E --> G
+```
+
+Nesta fase, o "sistema" é essencialmente um script Python sequencial
+(`src/experimento_contagem.py`). Conforme o projeto evoluir para M2/M3,
+está prevista a separação em módulos (`preprocessamento.py`,
+`deteccao.py`, `ocupacao.py`) e a criação de um notebook de análise de
+resultados e comparação de métodos.
+
+---
