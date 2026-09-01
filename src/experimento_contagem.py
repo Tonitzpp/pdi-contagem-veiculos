@@ -168,5 +168,5 @@ def main():
     salvar_visualizacao(img, mask, candidatos, "images/results/experimento_contagem_veiculos.png")
 
 
-if _name_ == "_main_":
+if __name__ == "__main__":
     main()
