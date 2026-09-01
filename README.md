@@ -106,7 +106,7 @@ cima, aplica o pipeline de detecção e salva o resultado em
 
 ## 10. Vídeo da M1
 
-
+Link do vídeo: https://youtu.be/90XMToKZbqo
 
 ## 11. Documentação adicional
 
