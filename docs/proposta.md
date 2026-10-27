@@ -1,6 +1,20 @@
 # Proposta Técnica — M1
 ## Contagem de Veículos em Estacionamentos a partir de Imagens Aéreas
 
+> **Status: documento da M1, revisado na M2.**
+> O texto original foi mantido como registro da etapa anterior. As decisões
+> que mudaram desde então estão marcadas ao longo do documento com
+> **[Revisado na M2]** e justificadas em
+> [`docs/relatorio_m2.md`](relatorio_m2.md), seção 2.
+>
+> | O que mudou | M1 | M2 |
+> |---|---|---|
+> | Dataset | CARPK (planejado) | PKLot (UFPR), CC BY 4.0, amostra versionada |
+> | Unidade de análise | imagem inteira, detecção de blobs | vaga a vaga, recorte retificado |
+> | Critério de detecção | limiar na saturação (HSV) | descritores acromáticos (borda e intensidade) |
+> | Avaliação | inspeção visual de 1 imagem sintética | 2 204 vagas reais, com separação por data e por estacionamento |
+> | Taxa de ocupação | segunda tarefa prevista para a M3 | saída **secundária**, derivada da contagem (ver feedback da M1) |
+
 ---
 
 ## 1. Problema
@@ -117,6 +131,10 @@ taxa de ocupação ────────────────────�
 ---
 
 ## 5. Pipeline preliminar
+
+> **[Revisado na M2]** O pipeline efetivamente implementado passou a operar
+> vaga a vaga, com recorte retificado antes da segmentação. Ver
+> [`docs/relatorio_m2.md`](relatorio_m2.md), seção 5.
 
 ```mermaid
 flowchart LR
@@ -249,6 +267,14 @@ resultados e comparação de métodos.
 
 ## 8. Imagens e dados
 
+> **[Revisado na M2]** O dataset passou a ser o **PKLot (VRI/UFPR)**, e não o
+> CARPK. Motivo: o CARPK só é distribuído mediante formulário de solicitação,
+> o que impede documentar um procedimento de obtenção reproduzível; o PKLot é
+> CC BY 4.0, tem download direto e anota cada vaga como ocupada/vazia, dando
+> referência também para a taxa de ocupação. Caracterização completa em
+> [`docs/relatorio_m2.md`](relatorio_m2.md), seção 3, e em
+> [`images/input/pklot/FONTE.md`](../images/input/pklot/FONTE.md).
+
 ### 8.1 Dataset alvo
 
 - **Nome:** CARPK Dataset (Car Parking lot dataset).
@@ -312,6 +338,11 @@ contagem automática com o ground truth fornecido pelo dataset.
 ---
 
 ## 11. Próximos passos previstos (M2)
+
+> **[Revisado na M2]** Os itens 1 a 4 foram cumpridos, com o PKLot no lugar do
+> CARPK; o item 5 avançou mais do que o previsto (a taxa de ocupação já é
+> calculada e medida). O planejamento vigente é o da seção 9 de
+> [`docs/relatorio_m2.md`](relatorio_m2.md).
 
 1. Baixar e organizar o CARPK Dataset em `images/input/`.
 2. Repetir o experimento de detecção/contagem sobre imagens reais e
