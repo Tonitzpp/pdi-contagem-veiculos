@@ -1,0 +1,13 @@
+configuracao,descricao,descritor,limiar,conjunto,n_imagens,n_vagas,acuracia_vagas,precisao,revocacao,falsos_positivos,falsos_negativos,mae_contagem,rmse_contagem,vies_contagem,erro_relativo_medio,n_imagens_erro_relativo,erro_medio_taxa_pp
+C1_bordas,C1 — densidade de borda (Canny + fechamento),densidade_borda,0.0752,ajuste,6,597,0.8643,0.8112,0.9683,71,10,10.83,12.16,10.17,0.712,6,10.89
+C1_bordas,C1 — densidade de borda (Canny + fechamento),densidade_borda,0.0752,avaliacao,12,1200,0.8042,0.732,0.9873,227,8,18.25,23.99,18.25,1.0381,10,18.25
+C1_bordas,C1 — densidade de borda (Canny + fechamento),densidade_borda,0.0752,avaliacao_cruzada,12,407,0.8059,0.8,1.0,79,0,6.58,10.86,6.58,0.309,11,20.39
+C2_textura,C2 — desvio padrao de intensidade,desvio_intensidade,0.16,ajuste,6,597,0.8995,0.9293,0.8762,21,39,10.0,12.91,-3.0,0.2054,6,10.04
+C2_textura,C2 — desvio padrao de intensidade,desvio_intensidade,0.16,avaliacao,12,1200,0.9125,0.8763,0.9697,86,19,8.08,10.91,5.58,0.5047,10,8.08
+C2_textura,C2 — desvio padrao de intensidade,desvio_intensidade,0.16,avaliacao_cruzada,12,407,0.9509,0.9568,0.981,14,6,1.5,1.91,0.67,0.0687,11,4.47
+C3_sem_morfologia,C3 — densidade de borda (Canny sem fechamento),densidade_borda,0.0704,ajuste,6,597,0.871,0.8216,0.9651,66,11,10.17,11.31,9.17,0.6443,6,10.22
+C3_sem_morfologia,C3 — densidade de borda (Canny sem fechamento),densidade_borda,0.0704,avaliacao,12,1200,0.8575,0.7918,0.9873,163,8,12.92,17.15,12.92,0.4265,10,12.92
+C3_sem_morfologia,C3 — densidade de borda (Canny sem fechamento),densidade_borda,0.0704,avaliacao_cruzada,12,407,0.8157,0.8082,1.0,75,0,6.25,10.23,6.25,0.2886,11,19.38
+C4_combinado,C4 (exploratorio) — desvio_intensidade E area_maior_regiao,desvio_intensidade>=0.1611 & area_maior_regiao>=0.0226,0.1611,ajuste,6,597,0.8995,0.9352,0.8698,19,41,10.0,13.11,-3.67,0.204,6,10.04
+C4_combinado,C4 (exploratorio) — desvio_intensidade E area_maior_regiao,desvio_intensidade>=0.1611 & area_maior_regiao>=0.0226,0.1611,avaliacao,12,1200,0.915,0.8823,0.9666,81,21,7.83,10.39,5.0,0.435,10,7.83
+C4_combinado,C4 (exploratorio) — desvio_intensidade E area_maior_regiao,desvio_intensidade>=0.1611 & area_maior_regiao>=0.0226,0.1611,avaliacao_cruzada,12,407,0.9533,0.9626,0.9778,12,7,1.42,1.76,0.42,0.0608,11,4.27
