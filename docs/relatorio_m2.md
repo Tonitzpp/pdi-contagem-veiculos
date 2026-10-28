@@ -392,7 +392,7 @@ por um classificador treinado sobre o vetor completo de descritores na M3.
 | 3 | Ampliar a amostra para ≥ 60 imagens, com mais imagens de ocupação baixa | Toni | `images/input/pklot/` atualizado e seção de dados revisada |
 | 4 | Ajustar no PUCPR e avaliar separadamente em UFPR04 e UFPR05, reportando MAE, RMSE e erro relativo por local | Gustavo | tabela de métricas por estacionamento |
 | 5 | Protótipo de detecção automática da grade de vagas (Hough sobre as marcações + agrupamento), avaliado por IoU contra os retângulos anotados | Toni | figura de sobreposição + IoU médio; se inviável, relatório do motivo |
-| 6 | Relatório final, vídeo e consolidação contra as metas da seção 1 | Ambos | `docs/relatorio_m3.md` |
+| 6 | Relatório final e consolidação contra as metas da seção 1 | Ambos | `docs/relatorio_m3.md` |
 
 A tarefa 5 é a de maior risco. Se não atingir qualidade utilizável, a M3 mantém
 a geometria como configuração do local e documenta o experimento negativo.
@@ -405,26 +405,14 @@ a geometria como configuração do local e documenta o experimento negativo.
 |---|---|---|
 | Toni Tison Zamparetti | Seleção e documentação do dataset, montagem dos conjuntos e do protocolo, análise dos casos de falha, redação das seções 2 a 4 e 7 | `images/input/pklot/`, `FONTE.md`, seções do relatório |
 | Gustavo Oliveira | Implementação de `pklot`, `pipeline` e `experimento_m2`, figuras e tabelas, redação das seções 5, 6 e 8 | `src/`, `results/`, `images/results/` |
-| Ambos | Definição das configurações comparadas, interpretação dos resultados, README e vídeo | histórico do repositório |
+| Ambos | Definição das configurações comparadas, interpretação dos resultados e README | histórico do repositório |
 
 ---
 
 ## 10. Declaração de uso de IA generativa
 
-- **Ferramenta:** Claude (Anthropic), via Claude Code.
-- **Finalidade:** apoio na reestruturação do código da M1 em módulos; apoio na
-  escrita das funções de geração de figuras com matplotlib; revisão de texto e
-  organização das seções; discussão das alternativas de dataset quando
-  constatamos que o CARPK exigia formulário de solicitação.
-- **Material produzido ou modificado:** esqueleto dos módulos em `src/`,
-  rascunho das seções deste relatório e do README.
-- **Verificação pelo grupo:** todo o código foi executado pelo grupo e os
-  números deste relatório vêm dos CSVs gerados por `src/experimento_m2.py`, não
-  do texto gerado. As figuras foram inspecionadas uma a uma, e foi dessa
-  inspeção que saíram os diagnósticos das seções 6.2, 6.3 e 7 — o papel do
-  paralelepípedo e dos veículos escuros foi observado nas imagens, não sugerido
-  pela ferramenta. A licença CC BY 4.0 do PKLot foi conferida diretamente na
-  página do VRI/UFPR.
+- **Ferramenta:** Claude (Anthropic).
+- **Finalidade:** apoio na estrutura do projeto baseado na rúbrica e também auxílio para a escrita dos relatórios e README. Por fim utilizei para revisar o meu código de modo a otimizar o código.
 
 ---
 

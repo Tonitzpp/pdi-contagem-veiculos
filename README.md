@@ -117,8 +117,7 @@ pdi-contagem-veiculos/
 ├── requirements.txt
 ├── docs/
 │   ├── proposta.md            # proposta da M1, com as revisões da M2 marcadas
-│   ├── relatorio_m2.md        # relatório parcial da M2  <- documento principal
-│   └── roteiro_video_m2.md    # roteiro da apresentação
+│   └── relatorio_m2.md        # relatório parcial da M2  <- documento principal
 ├── src/
 │   ├── pklot.py               # leitura da amostra: imagens, anotações, recorte da vaga
 │   ├── pipeline.py            # etapas de PDI e configurações comparadas
@@ -211,10 +210,9 @@ Dois achados: o descritor fotométrico separa as classes bem melhor que a
 densidade de bordas, e o fechamento morfológico **piora** o resultado — ele
 consolida a textura do piso mais que a silhueta do veículo.
 
-## 11. Vídeos
+## 11. Vídeo
 
 - **Vídeo da M1:** https://youtu.be/90XMToKZbqo
-- **Vídeo da M2:** _a inserir antes da entrega (YouTube, não listado)_
 
 ## 12. Documentação adicional
 
@@ -223,6 +221,5 @@ consolida a textura do piso mais que a silhueta do veículo.
   plano da M3, contribuições e declaração de uso de IA generativa.
 - [`docs/proposta.md`](docs/proposta.md) — proposta da M1, com as revisões da M2
   marcadas.
-- [`docs/roteiro_video_m2.md`](docs/roteiro_video_m2.md) — roteiro do vídeo.
 - [`images/input/pklot/FONTE.md`](images/input/pklot/FONTE.md) — origem, licença
   e obtenção das imagens.
